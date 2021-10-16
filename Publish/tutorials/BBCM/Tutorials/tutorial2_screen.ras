@@ -12,7 +12,7 @@ var
 procedure RenderScreen();
 begin
 	// could equally well have written "screenmemory:=screen_char_loc;"
-	zp := screen_char_loc;
+	zp := #screen_char_loc;
 	// Set cp to point to color memory
 	// 23 rows
 	for y:=0 to 25 do begin
@@ -38,6 +38,7 @@ end;
 
 procedure ShiftScreenData();
 begin
+	Screen::WaitForVerticalSync();
 	asm("
 		ldx #0
 loop_out:
@@ -58,6 +59,6 @@ begin
 	RenderScreen();
 	while(true) do
 		ShiftScreenData();
-
+	return;
 end.
 
